@@ -3,6 +3,8 @@ import { getRepository } from "typeorm";
 import { Category } from "../entity/Category";
 
 export const getCategories = async (req:Request, res:Response) => {
+    const {idUser} = req.body;
+    console.log(idUser);
     try {
         const categoriesData = await getRepository(Category).find();
         return res.json(categoriesData);
@@ -13,6 +15,8 @@ export const getCategories = async (req:Request, res:Response) => {
 }
 
 export const getCategory = async (req:Request, res:Response) => {
+    const {idUser} = req.body;
+    console.log(idUser);
     const id = req.params.id;
     const dataCategory = await getRepository(Category).findOne(id);
     if(dataCategory != null){
@@ -23,6 +27,8 @@ export const getCategory = async (req:Request, res:Response) => {
 }
 
 export const createCategory = async (req:Request, res:Response) => {
+    const {idUser} = req.body;
+    console.log(idUser);
     try {
         const newCategory = getRepository(Category).create(req.body);
         const results = await getRepository(Category).save(newCategory);
@@ -33,6 +39,8 @@ export const createCategory = async (req:Request, res:Response) => {
 }
 
 export const updateCategory = async (req:Request, res:Response) => {
+    const {idUser} = req.body;
+    console.log(idUser);
     const id = req.params.id;
     const categoryData = await getRepository(Category).findOne(id);
     try {
@@ -49,6 +57,8 @@ export const updateCategory = async (req:Request, res:Response) => {
 }
 
 export const deleteCategory = async (req:Request, res:Response) => {
+    const {idUser} = req.body;
+    console.log(idUser);
     const id = req.params.id;
     const categoryData = await getRepository(Category).findOne(id);
     try {

@@ -1,13 +1,15 @@
 import { Router } from "express";
+import { authentication } from "../auth/authentication";
 import { getRecipes, getRecipe, createRecipe, updateRecipe, deleteRecipe } from '../controllers/recipes.controllers';
+
 
 const routerRecipes = Router();
 
-routerRecipes.get('/recipes', getRecipes);
-routerRecipes.get('/recipes/:id', getRecipe);
-routerRecipes.post('/recipes', createRecipe);
-routerRecipes.put('/recipes/:id', updateRecipe);
-routerRecipes.delete('/recipes/:id', deleteRecipe);
+routerRecipes.get('/recipes', authentication, getRecipes);
+routerRecipes.get('/recipes/:id', authentication, getRecipe);
+routerRecipes.post('/recipes', authentication, createRecipe);
+routerRecipes.put('/recipes/:id', authentication, updateRecipe);
+routerRecipes.delete('/recipes/:id', authentication, deleteRecipe);
 
 /*
  

@@ -2,7 +2,12 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { User } from '../entity/User';
 
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 export const getUsers = async (req:Request, res:Response) => {
+    const {idUser} = req.body;
+    console.log(idUser);
     try {
         const usersData = await getRepository(User).find();
         return res.json(usersData);
@@ -13,6 +18,9 @@ export const getUsers = async (req:Request, res:Response) => {
 }
 
 export const getUser = async (req:Request, res:Response) => {
+    // Get
+    const {idUser} = req.body;
+    console.log(idUser);
     const id = req.params.id;
     const userData = await getRepository(User).findOne(id);
     if(userData != null){
@@ -23,16 +31,24 @@ export const getUser = async (req:Request, res:Response) => {
 }
 
 export const createUser = async (req:Request, res:Response) => {
-    try {
-        const newUser = getRepository(User).create(req.body);
-        const results = await getRepository(User).save(newUser);
-        return res.json(newUser);
-    } catch (error) {
-        res.status(500).json({msg:'No se puede agregar un nuevo usuario'});
-    }
+    const {nameUser, emailUser, passwordUser, idUser} = req.body;
+    console.log(idUser);
+    bcrypt.genSalt(10, (err:Error, salt:string) => {
+        bcrypt.hash(passwordUser, salt, async (err:Error, hash:string) => {
+            try {
+                const newUser = getRepository(User).create({nameUser,emailUser,passwordUser:hash});
+                await getRepository(User).save(newUser);
+                return res.json(newUser);
+            } catch (error) {
+                return res.status(500).json({msg:'No se puede agregar un nuevo usuario'});
+            }
+        });
+    })
 }
 
 export const updateUser = async (req:Request, res:Response) => {
+    const {idUser} = req.body;
+    console.log(idUser);
     const id = req.params.id;
     const userData = await getRepository(User).findOne(id);
     try {
@@ -49,6 +65,8 @@ export const updateUser = async (req:Request, res:Response) => {
 }
 
 export const deleteUser = async (req:Request, res:Response) => {
+    const {idUser} = req.body;
+    console.log(idUser);
     const id = req.params.id;
     const userData = await getRepository(User).findOne(id);
     try {

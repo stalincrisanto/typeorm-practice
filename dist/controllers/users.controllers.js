@@ -12,7 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.updateUser = exports.createUser = exports.getUser = exports.getUsers = void 0;
 const typeorm_1 = require("typeorm");
 const User_1 = require("../entity/User");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUser } = req.body;
+    console.log(idUser);
     try {
         const usersData = yield (0, typeorm_1.getRepository)(User_1.User).find();
         return res.json(usersData);
@@ -24,6 +28,9 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getUsers = getUsers;
 const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // Get
+    const { idUser } = req.body;
+    console.log(idUser);
     const id = req.params.id;
     const userData = yield (0, typeorm_1.getRepository)(User_1.User).findOne(id);
     if (userData != null) {
@@ -35,17 +42,25 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getUser = getUser;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const newUser = (0, typeorm_1.getRepository)(User_1.User).create(req.body);
-        const results = yield (0, typeorm_1.getRepository)(User_1.User).save(newUser);
-        return res.json(newUser);
-    }
-    catch (error) {
-        res.status(500).json({ msg: 'No se puede agregar un nuevo usuario' });
-    }
+    const { nameUser, emailUser, passwordUser, idUser } = req.body;
+    console.log(idUser);
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(passwordUser, salt, (err, hash) => __awaiter(void 0, void 0, void 0, function* () {
+            try {
+                const newUser = (0, typeorm_1.getRepository)(User_1.User).create({ nameUser, emailUser, passwordUser: hash });
+                yield (0, typeorm_1.getRepository)(User_1.User).save(newUser);
+                return res.json(newUser);
+            }
+            catch (error) {
+                return res.status(500).json({ msg: 'No se puede agregar un nuevo usuario' });
+            }
+        }));
+    });
 });
 exports.createUser = createUser;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUser } = req.body;
+    console.log(idUser);
     const id = req.params.id;
     const userData = yield (0, typeorm_1.getRepository)(User_1.User).findOne(id);
     try {
@@ -64,6 +79,8 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.updateUser = updateUser;
 const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUser } = req.body;
+    console.log(idUser);
     const id = req.params.id;
     const userData = yield (0, typeorm_1.getRepository)(User_1.User).findOne(id);
     try {

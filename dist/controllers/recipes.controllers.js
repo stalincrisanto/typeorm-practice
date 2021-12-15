@@ -13,6 +13,8 @@ exports.deleteRecipe = exports.updateRecipe = exports.createRecipe = exports.get
 const typeorm_1 = require("typeorm");
 const Recipe_1 = require("../entity/Recipe");
 const getRecipes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUser } = req.body;
+    console.log(idUser);
     try {
         const recipesData = yield (0, typeorm_1.getRepository)(Recipe_1.Recipe).find({ relations: ["user", "category"] });
         return res.json(recipesData);
@@ -24,6 +26,8 @@ const getRecipes = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.getRecipes = getRecipes;
 const getRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUser } = req.body;
+    console.log(idUser);
     const id = req.params.id;
     const recipeData = yield (0, typeorm_1.getRepository)(Recipe_1.Recipe).findOne(id, { relations: ["user", "category"] });
     if (recipeData != null) {
@@ -35,6 +39,8 @@ const getRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getRecipe = getRecipe;
 const createRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUser } = req.body;
+    console.log(idUser);
     try {
         const newRecipe = (0, typeorm_1.getRepository)(Recipe_1.Recipe).create(req.body);
         yield (0, typeorm_1.getRepository)(Recipe_1.Recipe).save(newRecipe);
@@ -49,6 +55,8 @@ const createRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.createRecipe = createRecipe;
 const updateRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUser } = req.body;
+    console.log(idUser);
     const id = req.params.id;
     const recipeData = yield (0, typeorm_1.getRepository)(Recipe_1.Recipe).findOne(id);
     if (recipeData != null) {
@@ -62,6 +70,8 @@ const updateRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.updateRecipe = updateRecipe;
 const deleteRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUser } = req.body;
+    console.log(idUser);
     const id = req.params.id;
     try {
         const recipeData = yield (0, typeorm_1.getRepository)(Recipe_1.Recipe).findOne(id);

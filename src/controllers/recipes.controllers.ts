@@ -3,6 +3,8 @@ import { getRepository, Like } from "typeorm";
 import { Recipe } from '../entity/Recipe';
 
 export const getRecipes = async (req:Request, res:Response) => {
+    const {idUser} = req.body;
+    console.log(idUser);
     try {
         const recipesData = await getRepository(Recipe).find({ relations: ["user","category"] });
         return res.json(recipesData);
@@ -13,6 +15,8 @@ export const getRecipes = async (req:Request, res:Response) => {
 }
 
 export const getRecipe = async (req:Request, res:Response) => {
+    const {idUser} = req.body;
+    console.log(idUser);
     const id = req.params.id;
     const recipeData = await getRepository(Recipe).findOne(id,{ relations: ["user","category"] });
     if(recipeData != null){
@@ -23,6 +27,8 @@ export const getRecipe = async (req:Request, res:Response) => {
 }
 
 export const createRecipe = async (req:Request, res:Response) => {
+    const {idUser} = req.body;
+    console.log(idUser);
     try {
         const newRecipe = getRepository(Recipe).create(req.body);
         await getRepository(Recipe).save(newRecipe);
@@ -36,6 +42,8 @@ export const createRecipe = async (req:Request, res:Response) => {
 }
  
 export const updateRecipe = async (req:Request, res:Response) => {
+    const {idUser} = req.body;
+    console.log(idUser);
     const id = req.params.id;
     const recipeData = await getRepository(Recipe).findOne(id);
     if(recipeData != null){
@@ -48,6 +56,8 @@ export const updateRecipe = async (req:Request, res:Response) => {
 }
 
 export const deleteRecipe = async (req:Request, res:Response) => {
+    const {idUser} = req.body;
+    console.log(idUser);
     const id = req.params.id;
     try {
         const recipeData = await getRepository(Recipe).findOne(id);

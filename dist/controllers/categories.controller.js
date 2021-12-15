@@ -13,6 +13,8 @@ exports.deleteCategory = exports.updateCategory = exports.createCategory = expor
 const typeorm_1 = require("typeorm");
 const Category_1 = require("../entity/Category");
 const getCategories = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUser } = req.body;
+    console.log(idUser);
     try {
         const categoriesData = yield (0, typeorm_1.getRepository)(Category_1.Category).find();
         return res.json(categoriesData);
@@ -24,6 +26,8 @@ const getCategories = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.getCategories = getCategories;
 const getCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUser } = req.body;
+    console.log(idUser);
     const id = req.params.id;
     const dataCategory = yield (0, typeorm_1.getRepository)(Category_1.Category).findOne(id);
     if (dataCategory != null) {
@@ -35,6 +39,8 @@ const getCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.getCategory = getCategory;
 const createCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUser } = req.body;
+    console.log(idUser);
     try {
         const newCategory = (0, typeorm_1.getRepository)(Category_1.Category).create(req.body);
         const results = yield (0, typeorm_1.getRepository)(Category_1.Category).save(newCategory);
@@ -46,6 +52,8 @@ const createCategory = (req, res) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.createCategory = createCategory;
 const updateCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUser } = req.body;
+    console.log(idUser);
     const id = req.params.id;
     const categoryData = yield (0, typeorm_1.getRepository)(Category_1.Category).findOne(id);
     try {
@@ -64,6 +72,8 @@ const updateCategory = (req, res) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.updateCategory = updateCategory;
 const deleteCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUser } = req.body;
+    console.log(idUser);
     const id = req.params.id;
     const categoryData = yield (0, typeorm_1.getRepository)(Category_1.Category).findOne(id);
     try {

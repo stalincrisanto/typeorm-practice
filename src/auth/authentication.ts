@@ -16,7 +16,7 @@ export const authentication = (req: Request, res: Response, next: NextFunction) 
         req.body.idUser = idUser;
         next();
     } catch (error) {
-        return res.status(401).json({errorMessage: 'Token inválido o sin token',nameError:error.name});
+        return res.status(401).json({errorMessage: 'Token inválido o sin token, error',nameError:error.name});
     }
 
     //console.log(decodedToken);

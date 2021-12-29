@@ -25,7 +25,7 @@
 // app.listen(3000, ()=> {
 //     console.log(`Servidor corriendo en puerto 3000`);
 // })
-
+import express from 'express';
 import {createConnection} from "typeorm";
 import {ApolloServer} from 'apollo-server';
 import { Category } from './graphql/models/Category';
@@ -34,6 +34,7 @@ import { User } from './graphql/models/User';
 import { resolvers } from './graphql/resolvers/resolvers';
 import { typeDefs } from './graphql/typeDefs/schema';
 
+const app = express();
 createConnection();
 
 const server = new ApolloServer({
@@ -42,6 +43,11 @@ const server = new ApolloServer({
     context: {User, Category, Recipe}
 })
 
+//server.applyMiddleware({app, path: '/graphql'});
+
+// app.listen({port:4000}), () => {
+
+// }
 server
     .listen()
     .then(({ url }) => console.log('Server running on port: 4000'))

@@ -4,11 +4,17 @@ exports.typeDefs = void 0;
 const apollo_server_1 = require("apollo-server");
 exports.typeDefs = (0, apollo_server_1.gql) `
     type User {
-        idUser: Int!
-        nameUser: String!
-        emailUser: String!
-        passwordUser: String!
+        idUser: Int
+        nameUser: String
+        emailUser: String
+        passwordUser: String
         recipes: [Recipe!]!
+    }
+
+    type UserLogin {
+        token: String
+        user: User
+        errors: String
     }
 
     type Category {
@@ -31,5 +37,9 @@ exports.typeDefs = (0, apollo_server_1.gql) `
         getSingleUser (idUser: Int!): User!
         getAllRecipes: [Recipe]
         getSingleRecipe (idRecipe: Int!) : Recipe
+    }
+
+    type Mutation {
+        generateToken (emailUser: String!, passwordUser: String!): UserLogin
     }
 `;

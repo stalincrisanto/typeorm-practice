@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resolvers = void 0;
 const typeorm_1 = require("typeorm");
+const login_controller_1 = require("../../controllers/login.controller");
 const Recipe_1 = require("../models/Recipe");
 const User_1 = require("../models/User");
 exports.resolvers = {
@@ -38,6 +39,12 @@ exports.resolvers = {
                 const recipeData = yield (0, typeorm_1.getRepository)(Recipe_1.Recipe).findOne(idRecipe, { relations: ["user", "category"] });
                 return recipeData;
             });
+        }
+    },
+    Mutation: {
+        generateToken(root, { emailUser, passwordUser }) {
+            const token = (0, login_controller_1.login)(emailUser, passwordUser);
+            return token;
         }
     }
 };

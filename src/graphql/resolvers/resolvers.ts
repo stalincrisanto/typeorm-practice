@@ -1,5 +1,5 @@
-
 import { getRepository } from "typeorm";
+import { login } from "../../controllers/login.controller";
 import { Recipe } from "../models/Recipe";
 import { User } from '../models/User';
 
@@ -20,6 +20,12 @@ export const resolvers = {
         async getSingleRecipe(root: any, { idRecipe }:{ idRecipe:any }){
             const recipeData = await getRepository(Recipe).findOne(idRecipe,{ relations: ["user","category"] });
             return recipeData;
+        }
+    },
+    Mutation: {
+        generateToken(root:any, {emailUser, passwordUser}:{emailUser:string, passwordUser:string}){
+            const token = login(emailUser, passwordUser);
+            return token
         }
     }
 }

@@ -10,6 +10,6 @@ routerUsers.get('/users/:id', authentication, getUser);
 routerUsers.post('/users', authentication, createUser);
 routerUsers.put('/users/:id', authentication, updateUser);
 routerUsers.delete('/users/:id', authentication, deleteUser);
-routerUsers.post('/login', login);
+//routerUsers.post('/login', login);
 
 export default routerUsers;

@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSingleRecipe = exports.getAllRecipes = void 0;
 const graphql_1 = require("graphql");
 const typeorm_1 = require("typeorm");
-;
 const Recipe_1 = require("../../entity/Recipe");
 const types_1 = require("../typesdef/types");
 exports.getAllRecipes = {

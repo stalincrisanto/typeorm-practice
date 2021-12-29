@@ -7,6 +7,9 @@ import { Recipe } from '../../entity/Recipe';
 const userType = new GraphQLObjectType({
     name: 'User',
     fields: {
+        idUser: {
+            type: GraphQLInt
+        },
         nameUser: {
             type: GraphQLString,
         },
@@ -22,6 +25,9 @@ const userType = new GraphQLObjectType({
 const categoryType = new GraphQLObjectType({
     name: 'Category',
     fields: {
+        idCategory: {
+            type: GraphQLInt
+        },
         nameCategory: {
             type: GraphQLString,
         }
@@ -51,6 +57,11 @@ const recipeType = new GraphQLObjectType({
                 return dataUsers;
             }
         },
+
+        // return person.favoriteFoods.map(id => {
+        //     return foodData.find(food => food.id === id)
+        //   })
+
         category: {
             type: categoryType,
             resolve: async (source, params) => {

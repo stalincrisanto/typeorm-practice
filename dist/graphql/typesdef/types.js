@@ -18,6 +18,9 @@ const Category_1 = require("../../entity/Category");
 const userType = new graphql_1.GraphQLObjectType({
     name: 'User',
     fields: {
+        idUser: {
+            type: graphql_1.GraphQLInt
+        },
         nameUser: {
             type: graphql_1.GraphQLString,
         },
@@ -33,6 +36,9 @@ exports.userType = userType;
 const categoryType = new graphql_1.GraphQLObjectType({
     name: 'Category',
     fields: {
+        idCategory: {
+            type: graphql_1.GraphQLInt
+        },
         nameCategory: {
             type: graphql_1.GraphQLString,
         }

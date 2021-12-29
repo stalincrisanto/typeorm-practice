@@ -3,7 +3,7 @@
     "url": "postgresql://postgres:stalin@localhost:5432/dbRecips",
     "logging": false,
     "entities": [
-       "dist/entity/**/*.js"
+       "dist/graphql/models/**/*.js"
     ],
     "synchronize":true
  }

@@ -68,6 +68,9 @@ const recipeType = new graphql_1.GraphQLObjectType({
                 return dataUsers;
             })
         },
+        // return person.favoriteFoods.map(id => {
+        //     return foodData.find(food => food.id === id)
+        //   })
         category: {
             type: categoryType,
             resolve: (source, params) => __awaiter(void 0, void 0, void 0, function* () {

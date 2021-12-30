@@ -14,31 +14,6 @@ const typeorm_1 = require("typeorm");
 const User_1 = require("../graphql/models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// export const login = async (req: Request, res: Response) => {
-//   const { emailUser, passwordUser } = req.body;
-//   const userData = await getRepository(User).findOne({ emailUser });
-//   const correctPassword =
-//     userData === null
-//       ? false
-//       : await bcrypt.compare(passwordUser, userData?.passwordUser);
-//   if(!(userData && correctPassword)){
-//         return res.status(401).json({
-//             error:'Usuario o contraseña incorrecta'
-//         })
-//     }
-//     const userForToken = {
-//         idUser : userData?.idUser,
-//         nameUser: userData?.nameUser
-//     }
-//     const token = jwt.sign(userForToken, 'stalin',{
-//         expiresIn: '2h'
-//     });
-//     res.send({
-//        nameUser: userData?.nameUser,
-//        emailUser: userData?.emailUser,
-//        token
-//     })
-// };
 const login = (emailUser, passwordUser) => __awaiter(void 0, void 0, void 0, function* () {
     const userData = yield (0, typeorm_1.getRepository)(User_1.User).findOne({ emailUser });
     const correctPassword = userData === null
@@ -72,3 +47,28 @@ const login = (emailUser, passwordUser) => __awaiter(void 0, void 0, void 0, fun
     };
 });
 exports.login = login;
+// export const login = async (req: Request, res: Response) => {
+//   const { emailUser, passwordUser } = req.body;
+//   const userData = await getRepository(User).findOne({ emailUser });
+//   const correctPassword =
+//     userData === null
+//       ? false
+//       : await bcrypt.compare(passwordUser, userData?.passwordUser);
+//   if(!(userData && correctPassword)){
+//         return res.status(401).json({
+//             error:'Usuario o contraseña incorrecta'
+//         })
+//     }
+//     const userForToken = {
+//         idUser : userData?.idUser,
+//         nameUser: userData?.nameUser
+//     }
+//     const token = jwt.sign(userForToken, 'stalin',{
+//         expiresIn: '2h'
+//     });
+//     res.send({
+//        nameUser: userData?.nameUser,
+//        emailUser: userData?.emailUser,
+//        token
+//     })
+// };

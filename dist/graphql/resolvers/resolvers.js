@@ -11,21 +11,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resolvers = void 0;
 const typeorm_1 = require("typeorm");
+const authentication_1 = require("../../auth/authentication");
 const login_controller_1 = require("../../controllers/login.controller");
 const Recipe_1 = require("../models/Recipe");
 const User_1 = require("../models/User");
 exports.resolvers = {
     Query: {
-        getAllUsers(root, args) {
+        getAllUsers(root, args, context) {
             return __awaiter(this, void 0, void 0, function* () {
-                const usersData = yield (0, typeorm_1.getRepository)(User_1.User).find();
-                return usersData;
+                if ((0, authentication_1.authentication)(context.token)) {
+                    const usersData = yield (0, typeorm_1.getRepository)(User_1.User).find();
+                    return usersData;
+                }
+                return null;
             });
         },
         getSingleUser(root, { idUser }) {
             return __awaiter(this, void 0, void 0, function* () {
                 const singleUserData = yield (0, typeorm_1.getRepository)(User_1.User).findOne(idUser);
-                return singleUserData;
+                if (singleUserData !== null) {
+                    return singleUserData;
+                }
+                return {
+                    idUser: null,
+                    nameUser: null,
+                    emailUser: null,
+                    passwordUser: null,
+                    errorsUser: `No se encontró el usuario con id ${idUser}`
+                };
             });
         },
         getAllRecipes(root, args) {

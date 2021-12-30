@@ -6,7 +6,8 @@ export const typeDefs = gql`
         nameUser: String
         emailUser: String
         passwordUser: String
-        recipes: [Recipe!]!
+        recipes: [Recipe]
+        errorsUser: String
     }
 
     type UserLogin {
@@ -31,8 +32,8 @@ export const typeDefs = gql`
     }
 
     type Query {
-        getAllUsers: [User!]!
-        getSingleUser (idUser: Int!): User!
+        getAllUsers: [User]
+        getSingleUser (idUser: Int!): User
         getAllRecipes: [Recipe]
         getSingleRecipe (idRecipe: Int!) : Recipe
     }

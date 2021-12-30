@@ -2,8 +2,9 @@ import { NextFunction, Request, Response } from "express";
 
 const jwt = require('jsonwebtoken');
 
-export const authentication = (req: Request, res: Response, next: NextFunction) => {
-    const authorization = req.get('authorization');
+export const authentication = (tokenEntered:string) => {
+    let userLogged = true;
+    const authorization = tokenEntered;
     let token = '';
 
     if(authorization && authorization.toLowerCase().startsWith('bearer')){
@@ -12,14 +13,10 @@ export const authentication = (req: Request, res: Response, next: NextFunction) 
 
     try {
         const decodedToken = jwt.verify(token, 'stalin');
-        const {idUser} = decodedToken;
-        req.body.idUser = idUser;
-        next();
+        const {nameUser} = decodedToken;
+        return userLogged;
+        //next();
     } catch (error) {
-        return res.status(401).json({errorMessage: 'Token inválido o sin token, error',nameError:error.name});
+        return userLogged = false;
     }
-
-    //console.log(decodedToken);
-
-
 }

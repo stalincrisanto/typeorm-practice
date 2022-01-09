@@ -1,5 +1,6 @@
 import { getRepository } from "typeorm";
 import { User } from "../graphql/models/User";
+import { AuthToken } from "../graphql/resolvers/types/token.type";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -12,7 +13,7 @@ export const login = async (emailUser: string, passwordUser: string) => {
             : await bcrypt.compare(passwordUser, userData?.passwordUser);
 
     if (userData===null || correctPassword===false) {
-        return {
+        /**return {
             token: null,
             user: {
                 idUser: null,
@@ -20,18 +21,21 @@ export const login = async (emailUser: string, passwordUser: string) => {
                 emailUser: null
             },
             errors: 'Usuario o contraseña incorrecta'
-        }
+        }**/
+        throw new Error("Usuario o contraseña incorrecta");
     }
 
     const userForToken = {
-        nameUser: userData?.nameUser
+        idUser: userData?.idUser,
+        nameUser: userData?.nameUser,
+        emailUser: userData?.emailUser
     }
 
     const token = jwt.sign(userForToken, 'stalin', {
         expiresIn: '2h'
     });
 
-    return {
+    /**return {
         token: token,
         user: {
             idUser: userData?.idUser,
@@ -39,7 +43,9 @@ export const login = async (emailUser: string, passwordUser: string) => {
             emailUser: userData?.emailUser
         },
         errors: ''
-    }
+    }**/
+    const authToken: AuthToken = { token };
+    return authToken;
 }
 
 // export const login = async (req: Request, res: Response) => {

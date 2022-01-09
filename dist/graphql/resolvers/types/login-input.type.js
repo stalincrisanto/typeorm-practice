@@ -9,42 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
-const typeorm_1 = require("typeorm");
+exports.LoginInput = void 0;
 const type_graphql_1 = require("type-graphql");
-let User = class User {
+let LoginInput = class LoginInput {
 };
 __decorate([
-    (0, type_graphql_1.Field)((type) => type_graphql_1.ID),
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
-], User.prototype, "idUser", void 0);
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], LoginInput.prototype, "email", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)({
-        length: 100,
-        nullable: false
-    }),
     __metadata("design:type", String)
-], User.prototype, "nameUser", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)({
-        length: 200,
-        nullable: false
-    }),
-    __metadata("design:type", String)
-], User.prototype, "emailUser", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)({
-        length: 100,
-        nullable: false
-    }),
-    __metadata("design:type", String)
-], User.prototype, "passwordUser", void 0);
-User = __decorate([
-    (0, type_graphql_1.ObjectType)(),
-    (0, typeorm_1.Entity)("users")
-], User);
-exports.User = User;
+], LoginInput.prototype, "password", void 0);
+LoginInput = __decorate([
+    (0, type_graphql_1.InputType)()
+], LoginInput);
+exports.LoginInput = LoginInput;

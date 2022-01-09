@@ -1,49 +1,40 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteRecipe = exports.updateRecipe = exports.createRecipe = exports.getRecipe = exports.getRecipes = void 0;
 const typeorm_1 = require("typeorm");
 const Recipe_1 = require("../entity/Recipe");
-const getRecipes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getRecipes = async (req, res) => {
     const { idUser } = req.body;
     console.log(idUser);
     try {
-        const recipesData = yield (0, typeorm_1.getRepository)(Recipe_1.Recipe).find({ relations: ["user", "category"] });
+        const recipesData = await (0, typeorm_1.getRepository)(Recipe_1.Recipe).find({ relations: ["user", "category"] });
         return res.json(recipesData);
     }
     catch (error) {
         console.log(error);
         return res.json({ msg: 'Ha ocurrido un error' });
     }
-});
+};
 exports.getRecipes = getRecipes;
-const getRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getRecipe = async (req, res) => {
     const { idUser } = req.body;
     console.log(idUser);
     const id = req.params.id;
-    const recipeData = yield (0, typeorm_1.getRepository)(Recipe_1.Recipe).findOne(id, { relations: ["user", "category"] });
+    const recipeData = await (0, typeorm_1.getRepository)(Recipe_1.Recipe).findOne(id, { relations: ["user", "category"] });
     if (recipeData != null) {
         return res.json(recipeData);
     }
     else {
         return res.json({ msg: `La receta con id: ${id}, no existe` });
     }
-});
+};
 exports.getRecipe = getRecipe;
-const createRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const createRecipe = async (req, res) => {
     const { idUser } = req.body;
     console.log(idUser);
     try {
         const newRecipe = (0, typeorm_1.getRepository)(Recipe_1.Recipe).create(req.body);
-        yield (0, typeorm_1.getRepository)(Recipe_1.Recipe).save(newRecipe);
+        await (0, typeorm_1.getRepository)(Recipe_1.Recipe).save(newRecipe);
         return res.json(newRecipe);
     }
     catch (error) {
@@ -52,31 +43,31 @@ const createRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             detail: error.detail
         });
     }
-});
+};
 exports.createRecipe = createRecipe;
-const updateRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const updateRecipe = async (req, res) => {
     const { idUser } = req.body;
     console.log(idUser);
     const id = req.params.id;
-    const recipeData = yield (0, typeorm_1.getRepository)(Recipe_1.Recipe).findOne(id);
+    const recipeData = await (0, typeorm_1.getRepository)(Recipe_1.Recipe).findOne(id);
     if (recipeData != null) {
         (0, typeorm_1.getRepository)(Recipe_1.Recipe).merge(recipeData, req.body);
-        const results = yield (0, typeorm_1.getRepository)(Recipe_1.Recipe).save(recipeData);
+        const results = await (0, typeorm_1.getRepository)(Recipe_1.Recipe).save(recipeData);
         return res.json(results);
     }
     else {
         return res.json({ msg: `La receta con id: ${id}, no existe` });
     }
-});
+};
 exports.updateRecipe = updateRecipe;
-const deleteRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteRecipe = async (req, res) => {
     const { idUser } = req.body;
     console.log(idUser);
     const id = req.params.id;
     try {
-        const recipeData = yield (0, typeorm_1.getRepository)(Recipe_1.Recipe).findOne(id);
+        const recipeData = await (0, typeorm_1.getRepository)(Recipe_1.Recipe).findOne(id);
         if (recipeData != null) {
-            const results = yield (0, typeorm_1.getRepository)(Recipe_1.Recipe).delete(id);
+            const results = await (0, typeorm_1.getRepository)(Recipe_1.Recipe).delete(id);
             if (results.affected == 1) {
                 return res.json({ msg: `La categoria con id: ${id} ha sido eliminada` });
             }
@@ -88,7 +79,7 @@ const deleteRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     catch (error) {
         return res.status(500).json({ error: `No se pudo eliminar el registro con id: ${id}` });
     }
-});
+};
 exports.deleteRecipe = deleteRecipe;
 /**
 export const getRecetaPorCategoria = async (req:Request, res:Response) => {

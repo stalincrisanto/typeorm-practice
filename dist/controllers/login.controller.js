@@ -1,26 +1,17 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = void 0;
 const typeorm_1 = require("typeorm");
 const User_1 = require("../graphql/models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const login = (emailUser, passwordUser) => __awaiter(void 0, void 0, void 0, function* () {
-    const userData = yield (0, typeorm_1.getRepository)(User_1.User).findOne({ emailUser });
+const login = async (emailUser, passwordUser) => {
+    const userData = await (0, typeorm_1.getRepository)(User_1.User).findOne({ emailUser });
     const correctPassword = userData === null
         ? false
-        : yield bcrypt.compare(passwordUser, userData === null || userData === void 0 ? void 0 : userData.passwordUser);
+        : await bcrypt.compare(passwordUser, userData === null || userData === void 0 ? void 0 : userData.passwordUser);
     if (userData === null || correctPassword === false) {
-        return {
+        /**return {
             token: null,
             user: {
                 idUser: null,
@@ -28,24 +19,29 @@ const login = (emailUser, passwordUser) => __awaiter(void 0, void 0, void 0, fun
                 emailUser: null
             },
             errors: 'Usuario o contraseña incorrecta'
-        };
+        }**/
+        throw new Error("Usuario o contraseña incorrecta");
     }
     const userForToken = {
-        nameUser: userData === null || userData === void 0 ? void 0 : userData.nameUser
+        idUser: userData === null || userData === void 0 ? void 0 : userData.idUser,
+        nameUser: userData === null || userData === void 0 ? void 0 : userData.nameUser,
+        emailUser: userData === null || userData === void 0 ? void 0 : userData.emailUser
     };
     const token = jwt.sign(userForToken, 'stalin', {
         expiresIn: '2h'
     });
-    return {
+    /**return {
         token: token,
         user: {
-            idUser: userData === null || userData === void 0 ? void 0 : userData.idUser,
-            nameUser: userData === null || userData === void 0 ? void 0 : userData.nameUser,
-            emailUser: userData === null || userData === void 0 ? void 0 : userData.emailUser
+            idUser: userData?.idUser,
+            nameUser: userData?.nameUser,
+            emailUser: userData?.emailUser
         },
         errors: ''
-    };
-});
+    }**/
+    const authToken = { token };
+    return authToken;
+};
 exports.login = login;
 // export const login = async (req: Request, res: Response) => {
 //   const { emailUser, passwordUser } = req.body;

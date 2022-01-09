@@ -1,13 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const users_controllers_1 = require("../controllers/users.controllers");
-const authentication_1 = require("../auth/authentication");
 const routerUsers = (0, express_1.Router)();
-routerUsers.get('/users', authentication_1.authentication, users_controllers_1.getUsers);
-routerUsers.get('/users/:id', authentication_1.authentication, users_controllers_1.getUser);
-routerUsers.post('/users', authentication_1.authentication, users_controllers_1.createUser);
-routerUsers.put('/users/:id', authentication_1.authentication, users_controllers_1.updateUser);
-routerUsers.delete('/users/:id', authentication_1.authentication, users_controllers_1.deleteUser);
+// routerUsers.get('/users', authentication, getUsers);
+// routerUsers.get('/users/:id', authentication, getUser);
+// routerUsers.post('/users', authentication, createUser);
+// routerUsers.put('/users/:id', authentication, updateUser);
+// routerUsers.delete('/users/:id', authentication, deleteUser);
 //routerUsers.post('/login', login);
 exports.default = routerUsers;

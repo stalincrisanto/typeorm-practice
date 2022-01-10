@@ -8,23 +8,19 @@ const express_1 = __importDefault(require("express"));
 const typeorm_1 = require("typeorm");
 const schema_1 = require("./graphql/typeDefs/schema");
 const graphql_playground_middleware_express_1 = __importDefault(require("graphql-playground-middleware-express"));
-const type_graphql_1 = require("type-graphql");
-const Users_resolvers_1 = require("./graphql/resolvers/Users.resolvers");
-const Recipe_resolvers_1 = require("./graphql/resolvers/Recipe.resolvers");
-const Category_resolvers_1 = require("./graphql/resolvers/Category.resolvers");
-const authentication_1 = require("./auth/authentication");
-const context_creator_1 = require("./auth/context/context-creator");
+const Auth_1 = __importDefault(require("./auth/Auth"));
+const resolvers_1 = require("./graphql/resolvers/resolvers");
 const startServer = async () => {
     const app = (0, express_1.default)();
     (0, typeorm_1.createConnection)();
-    const schema = await (0, type_graphql_1.buildSchema)({
-        resolvers: [Users_resolvers_1.UserResolver, Recipe_resolvers_1.RecipeResolvers, Category_resolvers_1.CategoryResolver],
-        authChecker: authentication_1.authentication
-    });
+    //,RecipeResolvers,CategoryResolver
+    // const schema = await buildSchema({
+    //     resolvers: [UserResolver]
+    // })
     const server = new apollo_server_express_1.ApolloServer({
         typeDefs: schema_1.typeDefs,
-        schema,
-        context: context_creator_1.contextCreator
+        resolvers: resolvers_1.resolvers,
+        context: Auth_1.default
     });
     await server.start();
     app.get('/api', (0, graphql_playground_middleware_express_1.default)({ endpoint: '/graphql' }));

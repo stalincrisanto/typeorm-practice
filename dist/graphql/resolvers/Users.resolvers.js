@@ -19,25 +19,29 @@ const login_controller_1 = require("../../controllers/login.controller");
 const User_1 = require("../models/User");
 const token_type_1 = require("./types/token.type");
 let UserResolver = class UserResolver {
-    async getAllUsers() {
-        return await (0, typeorm_1.getRepository)(User_1.User).find();
-    }
+    // @Query((returns) => [User])
+    // async getAllUsers(context: any): Promise<User[]> {
+    //     if (!context.isAuth)
+    //         return {
+    //             error: true,
+    //             message: "Token doesn't find!",
+    //         };
+    //     return await getRepository(User).find();
+    // }
     async getSingleUser(idUser) {
         return await (0, typeorm_1.getRepository)(User_1.User).findOne(idUser);
     }
-    generateToken(emailUser, passwordUser) {
+    generateToken(emailUser, passwordUser, context) {
+        console.log(context.isAuth);
+        if (!context.isAuth)
+            return {
+                error: true,
+                message: "Token doesn't find!",
+            };
         return (0, login_controller_1.login)(emailUser, passwordUser);
     }
 };
 __decorate([
-    (0, type_graphql_1.Authorized)(),
-    (0, type_graphql_1.Query)((returns) => [User_1.User]),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], UserResolver.prototype, "getAllUsers", null);
-__decorate([
-    (0, type_graphql_1.Authorized)(),
     (0, type_graphql_1.Query)((returns) => User_1.User),
     __param(0, (0, type_graphql_1.Arg)("idUser")),
     __metadata("design:type", Function),
@@ -49,7 +53,7 @@ __decorate([
     __param(0, (0, type_graphql_1.Arg)("emailUser")),
     __param(1, (0, type_graphql_1.Arg)("passwordUser")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:paramtypes", [String, String, Object]),
     __metadata("design:returntype", void 0)
 ], UserResolver.prototype, "generateToken", null);
 UserResolver = __decorate([

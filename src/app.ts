@@ -9,20 +9,21 @@ import { RecipeResolvers } from './graphql/resolvers/Recipe.resolvers';
 import { CategoryResolver } from './graphql/resolvers/Category.resolvers';
 import { authentication } from './auth/authentication';
 import { contextCreator } from './auth/context/context-creator';
+import Auth from './auth/Auth';
+import { resolvers } from './graphql/resolvers/resolvers';
 
 const startServer = async () => {
     const app = express();
     createConnection();
-
-    const schema = await buildSchema({
-        resolvers: [UserResolver,RecipeResolvers,CategoryResolver],
-        authChecker: authentication
-    })
+    //,RecipeResolvers,CategoryResolver
+    // const schema = await buildSchema({
+    //     resolvers: [UserResolver]
+    // })
 
     const server = new ApolloServer({
         typeDefs,
-        schema,
-        context: contextCreator
+        resolvers,
+        context: Auth
     })
 
     await server.start();

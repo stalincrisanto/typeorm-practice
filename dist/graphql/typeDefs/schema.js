@@ -25,12 +25,11 @@ exports.typeDefs = (0, apollo_server_1.gql) `
     }
 
     type Recipe {
-        idRecipe: Int!
-        nameRecipe: String!
-        descriptionRecipe: String!
-        ingredientsRecipe: String!
+        idRecipe: Int
+        nameRecipe: String
+        descriptionRecipe: String
+        ingredientsRecipe: String
         user: User
-        category: Category
     }
 
     type Query {

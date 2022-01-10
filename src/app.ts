@@ -1,11 +1,12 @@
 import { ApolloServer } from 'apollo-server-express';
 import express, {Request} from 'express';
 import { createConnection } from "typeorm";
-//import { resolvers } from './graphql/resolvers/resolvers';
 import { typeDefs } from './graphql/typeDefs/schema';
 import graphiql from "graphql-playground-middleware-express";
 import { buildSchema } from 'type-graphql';
 import { UserResolver } from './graphql/resolvers/Users.resolvers';
+import { RecipeResolvers } from './graphql/resolvers/Recipe.resolvers';
+import { CategoryResolver } from './graphql/resolvers/Category.resolvers';
 import { authentication } from './auth/authentication';
 import { contextCreator } from './auth/context/context-creator';
 
@@ -14,7 +15,7 @@ const startServer = async () => {
     createConnection();
 
     const schema = await buildSchema({
-        resolvers: [UserResolver],
+        resolvers: [UserResolver,RecipeResolvers,CategoryResolver],
         authChecker: authentication
     })
 

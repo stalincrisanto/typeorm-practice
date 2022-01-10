@@ -6,18 +6,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const apollo_server_express_1 = require("apollo-server-express");
 const express_1 = __importDefault(require("express"));
 const typeorm_1 = require("typeorm");
-//import { resolvers } from './graphql/resolvers/resolvers';
 const schema_1 = require("./graphql/typeDefs/schema");
 const graphql_playground_middleware_express_1 = __importDefault(require("graphql-playground-middleware-express"));
 const type_graphql_1 = require("type-graphql");
 const Users_resolvers_1 = require("./graphql/resolvers/Users.resolvers");
+const Recipe_resolvers_1 = require("./graphql/resolvers/Recipe.resolvers");
+const Category_resolvers_1 = require("./graphql/resolvers/Category.resolvers");
 const authentication_1 = require("./auth/authentication");
 const context_creator_1 = require("./auth/context/context-creator");
 const startServer = async () => {
     const app = (0, express_1.default)();
     (0, typeorm_1.createConnection)();
     const schema = await (0, type_graphql_1.buildSchema)({
-        resolvers: [Users_resolvers_1.UserResolver],
+        resolvers: [Users_resolvers_1.UserResolver, Recipe_resolvers_1.RecipeResolvers, Category_resolvers_1.CategoryResolver],
         authChecker: authentication_1.authentication
     });
     const server = new apollo_server_express_1.ApolloServer({

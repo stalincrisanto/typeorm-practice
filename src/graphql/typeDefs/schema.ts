@@ -23,12 +23,11 @@ export const typeDefs = gql`
     }
 
     type Recipe {
-        idRecipe: Int!
-        nameRecipe: String!
-        descriptionRecipe: String!
-        ingredientsRecipe: String!
+        idRecipe: Int
+        nameRecipe: String
+        descriptionRecipe: String
+        ingredientsRecipe: String
         user: User
-        category: Category
     }
 
     type Query {

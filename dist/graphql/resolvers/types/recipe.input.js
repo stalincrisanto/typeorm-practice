@@ -9,48 +9,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
-const typeorm_1 = require("typeorm");
+exports.CreateRecipeInput = void 0;
 const type_graphql_1 = require("type-graphql");
-const Recipe_1 = require("./Recipe");
-let User = class User {
+let CreateRecipeInput = class CreateRecipeInput {
 };
 __decorate([
-    (0, type_graphql_1.Field)((type) => type_graphql_1.ID),
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], CreateRecipeInput.prototype, "nameRecipe", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], CreateRecipeInput.prototype, "descriptionRecipe", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], CreateRecipeInput.prototype, "ingredientsRecipe", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
     __metadata("design:type", Number)
-], User.prototype, "idUser", void 0);
+], CreateRecipeInput.prototype, "userIdUser", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)({
-        length: 100,
-        nullable: false
-    }),
-    __metadata("design:type", String)
-], User.prototype, "nameUser", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)({
-        length: 200,
-        nullable: false
-    }),
-    __metadata("design:type", String)
-], User.prototype, "emailUser", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)({
-        length: 100,
-        nullable: false
-    }),
-    __metadata("design:type", String)
-], User.prototype, "passwordUser", void 0);
-__decorate([
-    (0, type_graphql_1.Field)((type) => [Recipe_1.Recipe]),
-    (0, typeorm_1.OneToMany)(type => Recipe_1.Recipe, recipe => recipe.user),
-    __metadata("design:type", Array)
-], User.prototype, "recipes", void 0);
-User = __decorate([
-    (0, type_graphql_1.ObjectType)(),
-    (0, typeorm_1.Entity)("users")
-], User);
-exports.User = User;
+    __metadata("design:type", Number)
+], CreateRecipeInput.prototype, "categoryIdCategory", void 0);
+CreateRecipeInput = __decorate([
+    (0, type_graphql_1.InputType)()
+], CreateRecipeInput);
+exports.CreateRecipeInput = CreateRecipeInput;

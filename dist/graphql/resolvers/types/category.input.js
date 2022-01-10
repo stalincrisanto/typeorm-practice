@@ -9,29 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Category = void 0;
-const typeorm_1 = require("typeorm");
+exports.CreateCategoryInput = void 0;
 const type_graphql_1 = require("type-graphql");
-const Recipe_1 = require("./Recipe");
-let Category = class Category {
+const class_validator_1 = require("class-validator");
+let CreateCategoryInput = class CreateCategoryInput {
 };
 __decorate([
-    (0, type_graphql_1.Field)((type) => type_graphql_1.ID),
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
-], Category.prototype, "idCategory", void 0);
-__decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)({ nullable: false }),
+    (0, class_validator_1.Length)(2, 255),
     __metadata("design:type", String)
-], Category.prototype, "nameCategory", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(type => [Recipe_1.Recipe]),
-    (0, typeorm_1.OneToMany)(type => Recipe_1.Recipe, recipe => recipe.category),
-    __metadata("design:type", Array)
-], Category.prototype, "recipes", void 0);
-Category = __decorate([
-    (0, type_graphql_1.ObjectType)(),
-    (0, typeorm_1.Entity)("categories")
-], Category);
-exports.Category = Category;
+], CreateCategoryInput.prototype, "nameCategory", void 0);
+CreateCategoryInput = __decorate([
+    (0, type_graphql_1.InputType)({
+        description: "Type for defining and validating Category creation input data",
+    })
+], CreateCategoryInput);
+exports.CreateCategoryInput = CreateCategoryInput;

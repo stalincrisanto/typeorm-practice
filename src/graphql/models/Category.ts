@@ -1,15 +1,19 @@
-// import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-// import { Recipe } from "./Recipe";
-
-// @Entity("categories")
-// export class Category {
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { ObjectType, Field, ID, InputType } from "type-graphql";
+import { Recipe } from './Recipe';
+@ObjectType()
+@Entity("categories")
+export class Category {
     
-//     @PrimaryGeneratedColumn()
-//     idCategory:number;
+    @Field((type) => ID)
+    @PrimaryGeneratedColumn()
+    idCategory:number;
 
-//     @Column({nullable: false})
-//     nameCategory:string;
+    @Field()
+    @Column({nullable: false})
+    nameCategory:string;
 
-//     @OneToMany(type => Recipe, recipe => recipe.category)
-//     recipes: Recipe[];
-// }
+    @Field(type => [Recipe])
+    @OneToMany(type => Recipe, recipe => recipe.category)
+    recipes: Recipe[];
+}

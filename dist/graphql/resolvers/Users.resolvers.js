@@ -22,20 +22,28 @@ let UserResolver = class UserResolver {
     async getAllUsers() {
         return await (0, typeorm_1.getRepository)(User_1.User).find();
     }
+    async getSingleUser(idUser) {
+        return await (0, typeorm_1.getRepository)(User_1.User).findOne(idUser);
+    }
     generateToken(emailUser, passwordUser) {
         return (0, login_controller_1.login)(emailUser, passwordUser);
-        //return await login(emailUser, passwordUser);
     }
 };
 __decorate([
     (0, type_graphql_1.Authorized)(),
-    (0, type_graphql_1.Query)((returns) => [User_1.User], {
-        description: "Returns an array of all existing userss",
-    }),
+    (0, type_graphql_1.Query)((returns) => [User_1.User]),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "getAllUsers", null);
+__decorate([
+    (0, type_graphql_1.Authorized)(),
+    (0, type_graphql_1.Query)((returns) => User_1.User),
+    __param(0, (0, type_graphql_1.Arg)("idUser")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "getSingleUser", null);
 __decorate([
     (0, type_graphql_1.Mutation)((returns) => token_type_1.AuthToken),
     __param(0, (0, type_graphql_1.Arg)("emailUser")),

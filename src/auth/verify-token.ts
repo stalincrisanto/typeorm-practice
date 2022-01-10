@@ -5,7 +5,8 @@ import internal from "stream";
 interface IDataUser {
     idUser: number,
     nameUser: string,
-    emailUser: string
+    emailUser: string,
+    rol: string
 }
 
 export const verifyToken = ({ headers }: Request) => {
@@ -20,7 +21,8 @@ export const verifyToken = ({ headers }: Request) => {
     const userData: IDataUser = {
         idUser: decodedToken.idUser,
         nameUser: decodedToken.nameUser,
-        emailUser: decodedToken.emailUser
+        emailUser: decodedToken.emailUser,
+        rol: decodedToken.rol
     }
     return userData;
 }

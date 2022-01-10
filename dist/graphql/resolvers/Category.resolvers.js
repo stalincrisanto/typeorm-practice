@@ -44,7 +44,7 @@ let CategoryResolver = class CategoryResolver {
     }
 };
 __decorate([
-    (0, type_graphql_1.Authorized)(),
+    (0, type_graphql_1.Authorized)("ADMIN"),
     (0, type_graphql_1.Query)((returns) => [Category_1.Category]),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -59,7 +59,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CategoryResolver.prototype, "getOneCategory", null);
 __decorate([
-    (0, type_graphql_1.Authorized)(),
+    (0, type_graphql_1.Authorized)("CUSTOMER"),
     (0, type_graphql_1.Mutation)((returns) => Category_1.Category),
     __param(0, (0, type_graphql_1.Arg)("nameCategory")),
     __metadata("design:type", Function),
@@ -67,7 +67,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CategoryResolver.prototype, "createCategory", null);
 __decorate([
-    (0, type_graphql_1.Authorized)(),
+    (0, type_graphql_1.Authorized)("ADMIN"),
     (0, type_graphql_1.Mutation)((returns) => Boolean),
     __param(0, (0, type_graphql_1.Arg)("idCategory")),
     __metadata("design:type", Function),

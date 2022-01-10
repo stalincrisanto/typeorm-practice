@@ -30,6 +30,13 @@ export class User {
         nullable: false
     })
     passwordUser:string;
+    
+    @Field()
+    @Column({
+        length: 200,
+        nullable: true
+    })
+    rol:string;
 
     @Field((type) => [Recipe])
     @OneToMany(type => Recipe, recipe => recipe.user)

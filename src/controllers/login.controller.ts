@@ -28,7 +28,8 @@ export const login = async (emailUser: string, passwordUser: string) => {
     const userForToken = {
         idUser: userData?.idUser,
         nameUser: userData?.nameUser,
-        emailUser: userData?.emailUser
+        emailUser: userData?.emailUser,
+        rol: userData?.rol
     }
 
     const token = jwt.sign(userForToken, 'stalin', {

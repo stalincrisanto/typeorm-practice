@@ -15,7 +15,8 @@ const verifyToken = ({ headers }) => {
     const userData = {
         idUser: decodedToken.idUser,
         nameUser: decodedToken.nameUser,
-        emailUser: decodedToken.emailUser
+        emailUser: decodedToken.emailUser,
+        rol: decodedToken.rol
     };
     return userData;
 };

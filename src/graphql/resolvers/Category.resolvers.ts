@@ -5,7 +5,7 @@ import { CreateCategoryInput } from "./types/category.input";
 
 @Resolver()
 export class CategoryResolver {
-    @Authorized()
+    @Authorized("ADMIN")
     @Query((returns) => [Category])
     async getAllCategories(): Promise<Category[]> {
         return await getRepository(Category).find();
@@ -17,7 +17,7 @@ export class CategoryResolver {
         return await getRepository(Category).findOne(idCategory);
     }
 
-    @Authorized()
+    @Authorized("CUSTOMER")
     @Mutation((returns) => Category)
     async createCategory(@Arg("nameCategory") nameCategory:CreateCategoryInput){
         const newCategory = getRepository(Category).create(nameCategory);
@@ -32,7 +32,7 @@ export class CategoryResolver {
     //     return await getRepository(Category).save(categoryData);
     // }
 
-    @Authorized()
+    @Authorized("ADMIN")
     @Mutation((returns) => Boolean)
     async deleteCategory(@Arg("idCategory") idCategory:number){
         const result = await getRepository(Category).delete(idCategory);

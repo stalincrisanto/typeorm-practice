@@ -25,7 +25,8 @@ const login = async (emailUser, passwordUser) => {
     const userForToken = {
         idUser: userData === null || userData === void 0 ? void 0 : userData.idUser,
         nameUser: userData === null || userData === void 0 ? void 0 : userData.nameUser,
-        emailUser: userData === null || userData === void 0 ? void 0 : userData.emailUser
+        emailUser: userData === null || userData === void 0 ? void 0 : userData.emailUser,
+        rol: userData === null || userData === void 0 ? void 0 : userData.rol
     };
     const token = jwt.sign(userForToken, 'stalin', {
         expiresIn: '2h'

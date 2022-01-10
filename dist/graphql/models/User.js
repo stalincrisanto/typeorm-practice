@@ -45,6 +45,14 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "passwordUser", void 0);
 __decorate([
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)({
+        length: 200,
+        nullable: true
+    }),
+    __metadata("design:type", String)
+], User.prototype, "rol", void 0);
+__decorate([
     (0, type_graphql_1.Field)((type) => [Recipe_1.Recipe]),
     (0, typeorm_1.OneToMany)(type => Recipe_1.Recipe, recipe => recipe.user),
     __metadata("design:type", Array)

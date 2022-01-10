@@ -31,7 +31,7 @@ export class RecipeResolvers {
     async deleteRecipe(@Arg("idRecipe") idRecipe:number){
         const result = await getRepository(Recipe).delete(idRecipe);
         if (result.affected === 0) {
-        throw new Error(`Recipe not found`);
+        throw new Error(`Recipe not found probando la nueva rama`);
         }
         return true;
     }

@@ -31,7 +31,7 @@ let RecipeResolvers = class RecipeResolvers {
     async deleteRecipe(idRecipe) {
         const result = await (0, typeorm_1.getRepository)(Recipe_1.Recipe).delete(idRecipe);
         if (result.affected === 0) {
-            throw new Error(`Recipe not found`);
+            throw new Error(`Recipe not found probando la nueva rama`);
         }
         return true;
     }

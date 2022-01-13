@@ -46,6 +46,7 @@ export const login = async (emailUser: string, passwordUser: string) => {
         errors: ''
     }**/
     const authToken: AuthToken = { token };
+    
     return authToken;
 }
 

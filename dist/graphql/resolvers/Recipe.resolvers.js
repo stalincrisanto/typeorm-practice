@@ -24,9 +24,22 @@ let RecipeResolvers = class RecipeResolvers {
     async getOneRecipe(idRecipe) {
         return await (0, typeorm_1.getRepository)(Recipe_1.Recipe).findOne(idRecipe, { relations: ["user", "category"] });
     }
+    async getMyRecipe(nameRecipe) {
+        return await (0, typeorm_1.getRepository)(Recipe_1.Recipe)
+            .createQueryBuilder("recipe")
+            .where("recipe.nameRecipe like :nameRecipe", { nameRecipe: `%${nameRecipe}%` })
+            .getMany();
+    }
     async createRecipe(recipeInput) {
         const newRecipe = (0, typeorm_1.getRepository)(Recipe_1.Recipe).create(recipeInput);
         return await (0, typeorm_1.getRepository)(Recipe_1.Recipe).save(newRecipe);
+    }
+    async updateRecipe(idRecipe, nameRecipe) {
+        const results = await (0, typeorm_1.getRepository)(Recipe_1.Recipe).update(idRecipe, nameRecipe);
+        if (results.affected === 0) {
+            throw new Error(`Recipe not found`);
+        }
+        return await (0, typeorm_1.getRepository)(Recipe_1.Recipe).findOne(idRecipe);
     }
     async deleteRecipe(idRecipe) {
         const result = await (0, typeorm_1.getRepository)(Recipe_1.Recipe).delete(idRecipe);
@@ -53,12 +66,29 @@ __decorate([
 ], RecipeResolvers.prototype, "getOneRecipe", null);
 __decorate([
     (0, type_graphql_1.Authorized)(),
+    (0, type_graphql_1.Query)((returns) => [Recipe_1.Recipe]),
+    __param(0, (0, type_graphql_1.Arg)("nameRecipe")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], RecipeResolvers.prototype, "getMyRecipe", null);
+__decorate([
+    (0, type_graphql_1.Authorized)(),
     (0, type_graphql_1.Mutation)((returns) => Recipe_1.Recipe),
     __param(0, (0, type_graphql_1.Arg)("recipeInput")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [recipe_input_1.CreateRecipeInput]),
     __metadata("design:returntype", Promise)
 ], RecipeResolvers.prototype, "createRecipe", null);
+__decorate([
+    (0, type_graphql_1.Authorized)(),
+    (0, type_graphql_1.Mutation)((returns) => Recipe_1.Recipe),
+    __param(0, (0, type_graphql_1.Arg)("idRecipe")),
+    __param(1, (0, type_graphql_1.Arg)("nameRecipe")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, recipe_input_1.CreateRecipeInput]),
+    __metadata("design:returntype", Promise)
+], RecipeResolvers.prototype, "updateRecipe", null);
 __decorate([
     (0, type_graphql_1.Authorized)(),
     (0, type_graphql_1.Mutation)((returns) => Boolean),

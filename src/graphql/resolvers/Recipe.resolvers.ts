@@ -20,10 +20,31 @@ export class RecipeResolvers {
     }
 
     @Authorized()
+    @Query((returns) => [Recipe])
+    async getMyRecipe(
+        @Arg("nameRecipe") nameRecipe:string,
+    ){
+        return await getRepository(Recipe)
+            .createQueryBuilder("recipe")
+            .where("recipe.nameRecipe like :nameRecipe",{ nameRecipe:`%${nameRecipe}%` })
+            .getMany();
+    }
+
+    @Authorized()
     @Mutation((returns) => Recipe)
     async createRecipe(@Arg("recipeInput")recipeInput:CreateRecipeInput){
         const newRecipe = getRepository(Recipe).create(recipeInput);
         return await getRepository(Recipe).save(newRecipe);
+    }
+
+    @Authorized()
+    @Mutation((returns) => Recipe)
+    async updateRecipe(@Arg("idRecipe") idRecipe:number, @Arg("nameRecipe") nameRecipe:CreateRecipeInput){
+        const results = await getRepository(Recipe).update(idRecipe, nameRecipe);
+        if (results.affected === 0) {
+            throw new Error(`Recipe not found`);
+        }
+        return await getRepository(Recipe).findOne(idRecipe)
     }
 
     @Authorized()

@@ -14,33 +14,28 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryResolver = void 0;
 const type_graphql_1 = require("type-graphql");
-const typeorm_1 = require("typeorm");
+const typedi_1 = require("typedi");
 const Category_1 = require("../models/Category");
+const Category_service_1 = require("../services/Category.service");
 const category_input_1 = require("./types/category.input");
 let CategoryResolver = class CategoryResolver {
+    constructor(categoryService) {
+        this.categoryService = categoryService;
+    }
     async getAllCategories() {
-        return await (0, typeorm_1.getRepository)(Category_1.Category).find();
+        return await this.categoryService.getAllCategories();
     }
     async getOneCategory(idCategory) {
-        return await (0, typeorm_1.getRepository)(Category_1.Category).findOne(idCategory);
+        return await this.categoryService.getOneCategory(idCategory);
     }
     async createCategory(nameCategory) {
-        const newCategory = (0, typeorm_1.getRepository)(Category_1.Category).create(nameCategory);
-        return await (0, typeorm_1.getRepository)(Category_1.Category).save(newCategory);
+        return await this.categoryService.createCategory(nameCategory);
     }
-    // @Authorized()
-    // @Mutation((returns) => Category)
-    // async updateCategory(@Arg("idCategory") idCategory:number, @Arg("nameCategory") nameCategory:CreateCategoryInput){
-    //     const categoryData = await getRepository(Category).findOne(idCategory);
-    //     const results = getRepository(Category).merge(categoryData,nameCategory);
-    //     return await getRepository(Category).save(categoryData);
-    // }
+    async updateCategory(idCategory, nameCategory) {
+        return await this.categoryService.updateCategory(idCategory, nameCategory);
+    }
     async deleteCategory(idCategory) {
-        const result = await (0, typeorm_1.getRepository)(Category_1.Category).delete(idCategory);
-        if (result.affected === 0) {
-            throw new Error(`Category not found`);
-        }
-        return true;
+        return await this.categoryService.deleteCategory(idCategory);
     }
 };
 __decorate([
@@ -67,6 +62,15 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CategoryResolver.prototype, "createCategory", null);
 __decorate([
+    (0, type_graphql_1.Authorized)(),
+    (0, type_graphql_1.Mutation)((returns) => Category_1.Category),
+    __param(0, (0, type_graphql_1.Arg)("idCategory")),
+    __param(1, (0, type_graphql_1.Arg)("nameCategory")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, category_input_1.CreateCategoryInput]),
+    __metadata("design:returntype", Promise)
+], CategoryResolver.prototype, "updateCategory", null);
+__decorate([
     (0, type_graphql_1.Authorized)("ADMIN"),
     (0, type_graphql_1.Mutation)((returns) => Boolean),
     __param(0, (0, type_graphql_1.Arg)("idCategory")),
@@ -75,6 +79,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CategoryResolver.prototype, "deleteCategory", null);
 CategoryResolver = __decorate([
-    (0, type_graphql_1.Resolver)()
+    (0, typedi_1.Service)(),
+    (0, type_graphql_1.Resolver)(),
+    __metadata("design:paramtypes", [Category_service_1.CategoryService])
 ], CategoryResolver);
 exports.CategoryResolver = CategoryResolver;

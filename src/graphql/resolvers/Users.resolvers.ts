@@ -1,10 +1,12 @@
 import { Resolver, Mutation, Query, Authorized, Arg } from "type-graphql";
+import { Service } from "typedi";
 import { getRepository } from "typeorm";
 import { authentication } from "../../auth/authentication";
 import { login } from "../../controllers/login.controller";
 import { User } from '../models/User';
 import { AuthToken } from './types/token.type';
 
+@Service()
 @Resolver()
 export class UserResolver {
     @Authorized()

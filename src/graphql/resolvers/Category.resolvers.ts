@@ -1,44 +1,43 @@
 import { Resolver, Mutation, Query, Authorized, Arg } from "type-graphql";
+import { Service } from "typedi";
 import { getRepository } from "typeorm";
 import { Category } from "../models/Category";
+import { CategoryService } from "../services/Category.service";
 import { CreateCategoryInput } from "./types/category.input";
 
+@Service()
 @Resolver()
 export class CategoryResolver {
+
+    constructor(private readonly categoryService: CategoryService){} 
+
     @Authorized("ADMIN")
     @Query((returns) => [Category])
     async getAllCategories(): Promise<Category[]> {
-        return await getRepository(Category).find();
+        return await this.categoryService.getAllCategories();
     }
 
     @Authorized()
     @Query((returns) => Category)
     async getOneCategory(@Arg("idCategory") idCategory:number){
-        return await getRepository(Category).findOne(idCategory);
+        return await this.categoryService.getOneCategory(idCategory);
     }
 
     @Authorized("CUSTOMER")
     @Mutation((returns) => Category)
     async createCategory(@Arg("nameCategory") nameCategory:CreateCategoryInput){
-        const newCategory = getRepository(Category).create(nameCategory);
-        return await getRepository(Category).save(newCategory);
+        return await this.categoryService.createCategory(nameCategory);
     }
 
-    // @Authorized()
-    // @Mutation((returns) => Category)
-    // async updateCategory(@Arg("idCategory") idCategory:number, @Arg("nameCategory") nameCategory:CreateCategoryInput){
-    //     const categoryData = await getRepository(Category).findOne(idCategory);
-    //     const results = getRepository(Category).merge(categoryData,nameCategory);
-    //     return await getRepository(Category).save(categoryData);
-    // }
+    @Authorized()
+    @Mutation((returns) => Category)
+    async updateCategory(@Arg("idCategory") idCategory:number, @Arg("nameCategory") nameCategory:CreateCategoryInput){
+        return await this.categoryService.updateCategory(idCategory,nameCategory);
+    }
 
     @Authorized("ADMIN")
     @Mutation((returns) => Boolean)
     async deleteCategory(@Arg("idCategory") idCategory:number){
-        const result = await getRepository(Category).delete(idCategory);
-        if (result.affected === 0) {
-        throw new Error(`Category not found`);
-        }
-        return true;
+        return await this.categoryService.deleteCategory(idCategory);
     }
 }

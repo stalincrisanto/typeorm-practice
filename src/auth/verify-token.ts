@@ -24,5 +24,6 @@ export const verifyToken = ({ headers }: Request) => {
         emailUser: decodedToken.emailUser,
         rol: decodedToken.rol
     }
+    
     return userData;
 }

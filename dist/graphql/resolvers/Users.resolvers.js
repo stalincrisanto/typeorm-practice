@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserResolver = void 0;
 const type_graphql_1 = require("type-graphql");
+const typedi_1 = require("typedi");
 const typeorm_1 = require("typeorm");
 const login_controller_1 = require("../../controllers/login.controller");
 const User_1 = require("../models/User");
@@ -53,6 +54,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserResolver.prototype, "generateToken", null);
 UserResolver = __decorate([
+    (0, typedi_1.Service)(),
     (0, type_graphql_1.Resolver)()
 ], UserResolver);
 exports.UserResolver = UserResolver;

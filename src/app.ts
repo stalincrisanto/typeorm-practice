@@ -1,5 +1,5 @@
 import { ApolloServer } from 'apollo-server-express';
-import express, {Request} from 'express';
+import express, { Request } from 'express';
 import { createConnection } from "typeorm";
 import graphiql from "graphql-playground-middleware-express";
 import { buildSchema } from 'type-graphql';
@@ -15,18 +15,21 @@ const startServer = async () => {
     createConnection();
 
     const schema = await buildSchema({
-        resolvers: [UserResolver,RecipeResolvers,CategoryResolver],
+        resolvers: [UserResolver, RecipeResolvers, CategoryResolver],
         container: Container,
         authChecker: authentication
     })
 
     const server = new ApolloServer({
         schema,
-        context: contextCreator
+        context: contextCreator,
+        formatError: ({ message, extensions }) => {
+            return { message, extensions };
+        }
     })
 
     await server.start();
-    app.get('/api',graphiql({endpoint:'/graphql'}));
+    app.get('/api', graphiql({ endpoint: '/graphql' }));
     server.applyMiddleware({ app, path: '/graphql' })
 
     app.listen(4000, () => {

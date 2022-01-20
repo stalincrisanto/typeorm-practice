@@ -9,24 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthToken = void 0;
+exports.AppError = void 0;
 const type_graphql_1 = require("type-graphql");
-const errors_type_1 = require("./errors.type");
-let AuthToken = class AuthToken {
+let AppError = class AppError {
 };
 __decorate([
     (0, type_graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
-], AuthToken.prototype, "token", void 0);
+], AppError.prototype, "field", void 0);
 __decorate([
     (0, type_graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
-], AuthToken.prototype, "refreshToken", void 0);
-__decorate([
-    (0, type_graphql_1.Field)({ nullable: true }),
-    __metadata("design:type", errors_type_1.AppError)
-], AuthToken.prototype, "errors", void 0);
-AuthToken = __decorate([
+], AppError.prototype, "message", void 0);
+AppError = __decorate([
     (0, type_graphql_1.ObjectType)()
-], AuthToken);
-exports.AuthToken = AuthToken;
+], AppError);
+exports.AppError = AppError;

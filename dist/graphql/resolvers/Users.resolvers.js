@@ -16,6 +16,7 @@ exports.UserResolver = void 0;
 const type_graphql_1 = require("type-graphql");
 const typedi_1 = require("typedi");
 const typeorm_1 = require("typeorm");
+const generateNewToken_1 = require("../../auth/generateNewToken");
 const login_controller_1 = require("../../controllers/login.controller");
 const User_1 = require("../models/User");
 const token_type_1 = require("./types/token.type");
@@ -28,6 +29,10 @@ let UserResolver = class UserResolver {
     }
     generateToken(emailUser, passwordUser) {
         return (0, login_controller_1.login)(emailUser, passwordUser);
+    }
+    generateTokenFromRefreshToken({ req }) {
+        console.log('Estoy entrando a la función para generar el nuevo token ', req);
+        return (0, generateNewToken_1.generateNewToken)(req);
     }
 };
 __decorate([
@@ -53,6 +58,12 @@ __decorate([
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], UserResolver.prototype, "generateToken", null);
+__decorate([
+    (0, type_graphql_1.Mutation)((returns) => String),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UserResolver.prototype, "generateTokenFromRefreshToken", null);
 UserResolver = __decorate([
     (0, typedi_1.Service)(),
     (0, type_graphql_1.Resolver)()

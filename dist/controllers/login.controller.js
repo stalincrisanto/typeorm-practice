@@ -11,16 +11,15 @@ const login = async (emailUser, passwordUser) => {
         ? false
         : await bcrypt.compare(passwordUser, userData === null || userData === void 0 ? void 0 : userData.passwordUser);
     if (userData === null || correctPassword === false) {
-        /**return {
+        //throw new Error("Credenciales inválidas")
+        return {
             token: null,
-            user: {
-                idUser: null,
-                nameUser: null,
-                emailUser: null
-            },
-            errors: 'Usuario o contraseña incorrecta'
-        }**/
-        throw new Error("Usuario o contraseña incorrecta");
+            refreshToken: null,
+            errors: {
+                field: "Email or password",
+                message: "Invalid credentials"
+            }
+        };
     }
     const userForToken = {
         idUser: userData === null || userData === void 0 ? void 0 : userData.idUser,
@@ -28,19 +27,19 @@ const login = async (emailUser, passwordUser) => {
         emailUser: userData === null || userData === void 0 ? void 0 : userData.emailUser,
         rol: userData === null || userData === void 0 ? void 0 : userData.rol
     };
+    const userForRefreshToken = {
+        idUser: userData === null || userData === void 0 ? void 0 : userData.idUser,
+        nameUser: userData === null || userData === void 0 ? void 0 : userData.nameUser,
+        emailUser: userData === null || userData === void 0 ? void 0 : userData.emailUser,
+        rol: userData === null || userData === void 0 ? void 0 : userData.rol
+    };
     const token = jwt.sign(userForToken, 'stalin', {
-        expiresIn: '2h'
+        expiresIn: '5m'
     });
-    /**return {
-        token: token,
-        user: {
-            idUser: userData?.idUser,
-            nameUser: userData?.nameUser,
-            emailUser: userData?.emailUser
-        },
-        errors: ''
-    }**/
-    const authToken = { token };
+    const refreshToken = jwt.sign(userForRefreshToken, 'crisanto', {
+        expiresIn: '10m'
+    });
+    const authToken = { token, refreshToken };
     return authToken;
 };
 exports.login = login;

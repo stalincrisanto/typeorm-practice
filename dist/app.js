@@ -24,7 +24,10 @@ const startServer = async () => {
     });
     const server = new apollo_server_express_1.ApolloServer({
         schema,
-        context: context_creator_1.contextCreator
+        context: context_creator_1.contextCreator,
+        formatError: ({ message, extensions }) => {
+            return { message, extensions };
+        }
     });
     await server.start();
     app.get('/api', (0, graphql_playground_middleware_express_1.default)({ endpoint: '/graphql' }));

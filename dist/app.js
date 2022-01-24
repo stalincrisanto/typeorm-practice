@@ -14,6 +14,7 @@ const Category_resolvers_1 = require("./graphql/resolvers/Category.resolvers");
 const authentication_1 = require("./auth/authentication");
 const context_creator_1 = require("./auth/context/context-creator");
 const typedi_1 = __importDefault(require("typedi"));
+const generateNewToken_1 = require("./auth/generateNewToken");
 const startServer = async () => {
     const app = (0, express_1.default)();
     (0, typeorm_1.createConnection)();
@@ -33,6 +34,7 @@ const startServer = async () => {
     });
     await server.start();
     app.get('/api', (0, graphql_playground_middleware_express_1.default)({ endpoint: '/graphql' }));
+    app.post('/api/generateNewToken', generateNewToken_1.generateNewToken);
     server.applyMiddleware({ app, path: '/graphql' });
     app.listen(4000, () => {
         console.log('Server started on port 4000');

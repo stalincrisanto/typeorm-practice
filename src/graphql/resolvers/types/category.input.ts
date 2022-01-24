@@ -7,6 +7,6 @@ import { Category } from '../../models/Category';
 })
 export class CreateCategoryInput implements Partial<Category> {
   @Field()
-  @Length(2, 255)
+  @Length(0, 255)
   nameCategory: string;
 }

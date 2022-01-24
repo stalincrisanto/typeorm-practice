@@ -32,10 +32,8 @@ export class UserResolver {
         return login(emailUser, passwordUser);
     }
 
-    @Mutation((returns) => String)
-    generateTokenFromRefreshToken(req: Request) {
-        console.log(req);
-        //const refreshToken = headers.authorization;
-        //return generateNewToken(refreshToken!);
-    }
+    // @Mutation((returns) => String,{nullable:true})
+    // generateTokenFromRefreshToken() {
+    //     return generateNewToken;
+    // }
 }

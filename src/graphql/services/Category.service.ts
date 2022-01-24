@@ -29,24 +29,18 @@ export class CategoryService {
 
     @Service()
     async createCategory(dataCategory: CreateCategoryInput) {
-        console.log(dataCategory);
-        try {
+        if(dataCategory.nameCategory !==""){
             const newCategory = getRepository(Category).create(dataCategory);
-            
             return await getRepository(Category).save(newCategory);
-        } catch (error) {
-            console.log(error);
         }
-        // if(dataCategory.nameCategory !==""){
-        // }
-        // return {
-        //     idCategory: null,
-        //     nameCategory: null,
-        //     errors: {
-        //         field: "Nombre de la categoría",
-        //         message: "Argument Validation Error"
-        //     }
-        // }
+        return {
+            idCategory: null,
+            nameCategory: null,
+            errors: {
+                field: "Nombre de la categoría",
+                message: "Argument Validation Error"
+            }
+        }
     }
 
     @Service()

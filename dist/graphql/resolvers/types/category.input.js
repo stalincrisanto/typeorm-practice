@@ -16,7 +16,7 @@ let CreateCategoryInput = class CreateCategoryInput {
 };
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, class_validator_1.Length)(2, 255),
+    (0, class_validator_1.Length)(0, 255),
     __metadata("design:type", String)
 ], CreateCategoryInput.prototype, "nameCategory", void 0);
 CreateCategoryInput = __decorate([

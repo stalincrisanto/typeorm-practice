@@ -33,24 +33,18 @@ let CategoryService = class CategoryService {
         return dataCategory;
     }
     async createCategory(dataCategory) {
-        console.log(dataCategory);
-        try {
+        if (dataCategory.nameCategory !== "") {
             const newCategory = (0, typeorm_1.getRepository)(Category_1.Category).create(dataCategory);
             return await (0, typeorm_1.getRepository)(Category_1.Category).save(newCategory);
         }
-        catch (error) {
-            console.log(error);
-        }
-        // if(dataCategory.nameCategory !==""){
-        // }
-        // return {
-        //     idCategory: null,
-        //     nameCategory: null,
-        //     errors: {
-        //         field: "Nombre de la categoría",
-        //         message: "Argument Validation Error"
-        //     }
-        // }
+        return {
+            idCategory: null,
+            nameCategory: null,
+            errors: {
+                field: "Nombre de la categoría",
+                message: "Argument Validation Error"
+            }
+        };
     }
     async updateCategory(idCategory, dataCategory) {
         const results = await (0, typeorm_1.getRepository)(Category_1.Category).update(idCategory, dataCategory);

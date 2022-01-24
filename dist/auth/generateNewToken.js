@@ -5,26 +5,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateNewToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-// interface IDataUser {
-//     idUser: number,
-//     nameUser: string,
-//     emailUser: string,
-//     rol: string
-// }
-const generateNewToken = (headers) => {
-    console.log('Estoy ingresando', headers);
-    //const authorization = headers.authorization;
+const generateNewToken = (req, res) => {
+    const refreshToken = req.headers.refresh;
+    console.log(refreshToken);
     let token = '';
-    if (headers && headers.toLowerCase().startsWith('bearer')) {
-        token = headers.substring(7);
+    if (refreshToken && refreshToken.toLowerCase().startsWith('bearer')) {
+        token = refreshToken.substring(7);
     }
     const decodedToken = jsonwebtoken_1.default.verify(token, 'crisanto');
-    /**const userData: IDataUser = {
+    const userData = {
         idUser: decodedToken.idUser,
         nameUser: decodedToken.nameUser,
         emailUser: decodedToken.emailUser,
         rol: decodedToken.rol
-    }**/
-    return "userData";
+    };
+    const newToken = jsonwebtoken_1.default.sign(userData, 'stalin', {
+        expiresIn: '5m'
+    });
+    const authToken = { newToken };
+    return res.json({ authToken });
+    // return "userData";
 };
 exports.generateNewToken = generateNewToken;

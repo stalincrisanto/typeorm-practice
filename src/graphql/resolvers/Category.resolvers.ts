@@ -25,15 +25,10 @@ export class CategoryResolver {
 
     @Authorized("CUSTOMER")
     @Mutation((returns) => Category)
-    async createCategory(@Arg("nameCategory") nameCategory:CreateCategoryInput){
-        console.log(nameCategory);
-        try {
-            const newCategory = await this.categoryService.createCategory(nameCategory);
-            return newCategory;
-            
-        } catch (error) {
-            console.log(error);
-        }
+    async createCategory(@Arg("nameCategory", { nullable: true }) nameCategory:CreateCategoryInput){
+    //async createCategory(@Arg("nameCategory") nameCategory:CreateCategoryInput){
+        const newCategory = await this.categoryService.createCategory(nameCategory);
+        return newCategory;
     }
 
     @Authorized()

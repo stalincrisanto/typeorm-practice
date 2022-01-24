@@ -29,14 +29,9 @@ let CategoryResolver = class CategoryResolver {
         return await this.categoryService.getOneCategory(idCategory);
     }
     async createCategory(nameCategory) {
-        console.log(nameCategory);
-        try {
-            const newCategory = await this.categoryService.createCategory(nameCategory);
-            return newCategory;
-        }
-        catch (error) {
-            console.log(error);
-        }
+        //async createCategory(@Arg("nameCategory") nameCategory:CreateCategoryInput){
+        const newCategory = await this.categoryService.createCategory(nameCategory);
+        return newCategory;
     }
     async updateCategory(idCategory, nameCategory) {
         return await this.categoryService.updateCategory(idCategory, nameCategory);
@@ -63,7 +58,7 @@ __decorate([
 __decorate([
     (0, type_graphql_1.Authorized)("CUSTOMER"),
     (0, type_graphql_1.Mutation)((returns) => Category_1.Category),
-    __param(0, (0, type_graphql_1.Arg)("nameCategory")),
+    __param(0, (0, type_graphql_1.Arg)("nameCategory", { nullable: true })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [category_input_1.CreateCategoryInput]),
     __metadata("design:returntype", Promise)

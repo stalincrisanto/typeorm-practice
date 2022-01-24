@@ -9,6 +9,8 @@ import { CategoryResolver } from './graphql/resolvers/Category.resolvers';
 import { authentication } from './auth/authentication';
 import { contextCreator } from './auth/context/context-creator';
 import Container from 'typedi';
+import { generateNewToken } from './auth/generateNewToken';
+
 
 const startServer = async () => {
     const app = express();
@@ -32,6 +34,7 @@ const startServer = async () => {
 
     await server.start();
     app.get('/api', graphiql({ endpoint: '/graphql' }));
+    app.post('/api/generateNewToken', generateNewToken)
     server.applyMiddleware({ app, path: '/graphql' })
 
     app.listen(4000, () => {

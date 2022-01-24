@@ -5,25 +5,52 @@ import { CreateCategoryInput } from "../resolvers/types/category.input";
 
 @Service()
 export class CategoryService {
-    
+
     @Service()
     async getAllCategories(): Promise<Category[]> {
         return await getRepository(Category).find();
     }
 
     @Service()
-    async getOneCategory(idCategory:number){
-        return await getRepository(Category).findOne(idCategory);
+    async getOneCategory(idCategory: number) {
+        const dataCategory = await getRepository(Category).findOne(idCategory);
+        if(!dataCategory){
+            return {
+                idCategory: null,
+                nameCategory: null,
+                errors:{
+                    field:"idCategory",
+                    message:"Id category doesn't exist"
+                }
+            }
+        }
+        return dataCategory;
     }
 
     @Service()
-    async createCategory(dataCategory: CreateCategoryInput){
-        const newCategory = getRepository(Category).create(dataCategory);
-        return await getRepository(Category).save(newCategory);
+    async createCategory(dataCategory: CreateCategoryInput) {
+        console.log(dataCategory);
+        try {
+            const newCategory = getRepository(Category).create(dataCategory);
+            
+            return await getRepository(Category).save(newCategory);
+        } catch (error) {
+            console.log(error);
+        }
+        // if(dataCategory.nameCategory !==""){
+        // }
+        // return {
+        //     idCategory: null,
+        //     nameCategory: null,
+        //     errors: {
+        //         field: "Nombre de la categoría",
+        //         message: "Argument Validation Error"
+        //     }
+        // }
     }
 
     @Service()
-    async updateCategory(idCategory:number, dataCategory:CreateCategoryInput){
+    async updateCategory(idCategory: number, dataCategory: CreateCategoryInput) {
         const results = await getRepository(Category).update(idCategory, dataCategory);
         if (results.affected === 0) {
             throw new Error(`Category not found`);
@@ -32,7 +59,7 @@ export class CategoryService {
     }
 
     @Service()
-    async deleteCategory(idCategory:number){
+    async deleteCategory(idCategory: number) {
         const result = await getRepository(Category).delete(idCategory);
         if (result.affected === 0) {
             throw new Error(`Category not found`);

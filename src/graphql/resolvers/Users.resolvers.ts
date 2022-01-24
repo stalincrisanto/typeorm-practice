@@ -33,8 +33,9 @@ export class UserResolver {
     }
 
     @Mutation((returns) => String)
-    generateTokenFromRefreshToken({ req }: RawContext) {
-        console.log('Estoy entrando a la función para generar el nuevo token ',req );
-        return generateNewToken(req);
+    generateTokenFromRefreshToken(req: Request) {
+        console.log(req);
+        //const refreshToken = headers.authorization;
+        //return generateNewToken(refreshToken!);
     }
 }

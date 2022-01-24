@@ -19,11 +19,38 @@ let CategoryService = class CategoryService {
         return await (0, typeorm_1.getRepository)(Category_1.Category).find();
     }
     async getOneCategory(idCategory) {
-        return await (0, typeorm_1.getRepository)(Category_1.Category).findOne(idCategory);
+        const dataCategory = await (0, typeorm_1.getRepository)(Category_1.Category).findOne(idCategory);
+        if (!dataCategory) {
+            return {
+                idCategory: null,
+                nameCategory: null,
+                errors: {
+                    field: "idCategory",
+                    message: "Id category doesn't exist"
+                }
+            };
+        }
+        return dataCategory;
     }
     async createCategory(dataCategory) {
-        const newCategory = (0, typeorm_1.getRepository)(Category_1.Category).create(dataCategory);
-        return await (0, typeorm_1.getRepository)(Category_1.Category).save(newCategory);
+        console.log(dataCategory);
+        try {
+            const newCategory = (0, typeorm_1.getRepository)(Category_1.Category).create(dataCategory);
+            return await (0, typeorm_1.getRepository)(Category_1.Category).save(newCategory);
+        }
+        catch (error) {
+            console.log(error);
+        }
+        // if(dataCategory.nameCategory !==""){
+        // }
+        // return {
+        //     idCategory: null,
+        //     nameCategory: null,
+        //     errors: {
+        //         field: "Nombre de la categoría",
+        //         message: "Argument Validation Error"
+        //     }
+        // }
     }
     async updateCategory(idCategory, dataCategory) {
         const results = await (0, typeorm_1.getRepository)(Category_1.Category).update(idCategory, dataCategory);

@@ -8,16 +8,17 @@ import jwt from 'jsonwebtoken';
 //     rol: string
 // }
 
-export const generateNewToken = ( { headers }: Request ) => {
-    const authorization = headers.authorization;
+export const generateNewToken = ( headers:String ) => {
+    console.log('Estoy ingresando',headers);
+    //const authorization = headers.authorization;
     let token = '';
 
-    /**if(authorization && authorization.toLowerCase().startsWith('bearer')){
-        token = authorization.substring(7);
+    if(headers && headers.toLowerCase().startsWith('bearer')){
+        token = headers.substring(7);
     }
 
-    const decodedToken: any = jwt.verify(token, 'stalin');
-    const userData: IDataUser = {
+    const decodedToken: any = jwt.verify(token, 'crisanto');
+    /**const userData: IDataUser = {
         idUser: decodedToken.idUser,
         nameUser: decodedToken.nameUser,
         emailUser: decodedToken.emailUser,

@@ -13,16 +13,17 @@ exports.Category = void 0;
 const typeorm_1 = require("typeorm");
 const type_graphql_1 = require("type-graphql");
 const Recipe_1 = require("./Recipe");
+const errors_type_1 = require("../resolvers/types/errors.type");
 let Category = class Category {
 };
 __decorate([
-    (0, type_graphql_1.Field)((type) => type_graphql_1.ID),
+    (0, type_graphql_1.Field)((type) => type_graphql_1.ID, { nullable: true }),
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], Category.prototype, "idCategory", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)({ nullable: false }),
+    (0, type_graphql_1.Field)({ nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Category.prototype, "nameCategory", void 0);
 __decorate([
@@ -30,6 +31,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(type => Recipe_1.Recipe, recipe => recipe.category),
     __metadata("design:type", Array)
 ], Category.prototype, "recipes", void 0);
+__decorate([
+    (0, type_graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", errors_type_1.AppError)
+], Category.prototype, "errors", void 0);
 Category = __decorate([
     (0, type_graphql_1.ObjectType)(),
     (0, typeorm_1.Entity)("categories")

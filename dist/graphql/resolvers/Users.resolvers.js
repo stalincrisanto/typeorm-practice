@@ -16,7 +16,6 @@ exports.UserResolver = void 0;
 const type_graphql_1 = require("type-graphql");
 const typedi_1 = require("typedi");
 const typeorm_1 = require("typeorm");
-const generateNewToken_1 = require("../../auth/generateNewToken");
 const login_controller_1 = require("../../controllers/login.controller");
 const User_1 = require("../models/User");
 const token_type_1 = require("./types/token.type");
@@ -30,9 +29,10 @@ let UserResolver = class UserResolver {
     generateToken(emailUser, passwordUser) {
         return (0, login_controller_1.login)(emailUser, passwordUser);
     }
-    generateTokenFromRefreshToken({ req }) {
-        console.log('Estoy entrando a la función para generar el nuevo token ', req);
-        return (0, generateNewToken_1.generateNewToken)(req);
+    generateTokenFromRefreshToken(req) {
+        console.log(req);
+        //const refreshToken = headers.authorization;
+        //return generateNewToken(refreshToken!);
     }
 };
 __decorate([

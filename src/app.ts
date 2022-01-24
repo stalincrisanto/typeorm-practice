@@ -23,9 +23,11 @@ const startServer = async () => {
     const server = new ApolloServer({
         schema,
         context: contextCreator,
-        formatError: ({ message, extensions }) => {
-            return { message, extensions };
-        }
+        // formatError: ({ message, extensions }) => {
+        //     //console.log(message);
+        //     //console.log(extensions);
+        //     return { message, extensions };
+        // }
     })
 
     await server.start();

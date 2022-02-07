@@ -10,7 +10,6 @@ interface IDataUser {
 
 export const generateNewToken = ( req:Request, res:Response) => {
     const refreshToken = req.headers.refresh as string;
-    console.log(refreshToken);
 
     let token = '';
 
@@ -27,11 +26,11 @@ export const generateNewToken = ( req:Request, res:Response) => {
     }
 
     const newToken = jwt.sign(userData, 'stalin', {
-        expiresIn: '5m'
+        expiresIn: '10m'
     });
     
     const authToken = { newToken };
 
-    return res.json({authToken});
-    // return "userData";
+    return res.json({newToken:authToken.newToken});
+    //return authToken;
 }

@@ -6,7 +6,8 @@ import { generateNewToken } from "../../auth/generateNewToken";
 import { login } from "../../controllers/login.controller";
 import { User } from '../models/User';
 import { AuthToken } from './types/token.type';
-import { Request } from 'express';
+import { Request, Response } from 'express';
+import { NewToken } from "./types/newToken";
 
 interface RawContext {
     req: Request;
@@ -32,8 +33,7 @@ export class UserResolver {
         return login(emailUser, passwordUser);
     }
 
-    // @Mutation((returns) => String,{nullable:true})
+    // @Mutation((returns) => NewToken,{nullable:true})
     // generateTokenFromRefreshToken() {
-    //     return generateNewToken;
     // }
 }

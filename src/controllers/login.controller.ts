@@ -39,11 +39,11 @@ export const login = async (emailUser: string, passwordUser: string) => {
     }
 
     const token = jwt.sign(userForToken, 'stalin', {
-        expiresIn: '5m'
+        expiresIn: '1m'
     });
 
     const refreshToken = jwt.sign(userForRefreshToken, 'crisanto', {
-        expiresIn: '10m'
+        expiresIn: '5m'
     });
 
     const authToken = { token, refreshToken };

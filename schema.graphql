@@ -1,0 +1,70 @@
+type Query {
+  getAllUsers: [User!]!
+  getSingleUser(idUser: Float!): User!
+  getAllRecipes: [Recipe!]!
+  getOneRecipe(idRecipe: Float!): Recipe!
+  getMyRecipe(nameRecipe: String!): [Recipe!]!
+  getAllCategories: [Category!]!
+  getOneCategory(idCategory: Float!): Category!
+}
+
+type User {
+  idUser: ID!
+  nameUser: String!
+  emailUser: String!
+  passwordUser: String!
+  rol: String!
+  recipes: [Recipe!]!
+}
+
+type Recipe {
+  idRecipe: ID!
+  nameRecipe: String!
+  descriptionRecipe: String!
+  ingredientsRecipe: String!
+  user: User!
+  category: Category!
+}
+
+type Category {
+  idCategory: ID
+  nameCategory: String
+  recipes: [Recipe!]!
+  errors: AppError
+}
+
+type AppError {
+  field: String
+  message: String
+}
+
+type Mutation {
+  generateToken(passwordUser: String!, emailUser: String!): AuthToken!
+  createRecipe(recipeInput: CreateRecipeInput!): Recipe!
+  updateRecipe(nameRecipe: CreateRecipeInput!, idRecipe: Float!): Recipe!
+  deleteRecipe(idRecipe: Float!): Boolean!
+  createCategory(nameCategory: CreateCategoryInput): Category!
+  updateCategory(
+    nameCategory: CreateCategoryInput!
+    idCategory: Float!
+  ): Category!
+  deleteCategory(idCategory: Float!): Boolean!
+}
+
+type AuthToken {
+  token: String
+  refreshToken: String
+  errors: AppError
+}
+
+input CreateRecipeInput {
+  nameRecipe: String!
+  descriptionRecipe: String!
+  ingredientsRecipe: String!
+  userIdUser: Float!
+  categoryIdCategory: Float!
+}
+
+input CreateCategoryInput {
+  nameCategory: String!
+}

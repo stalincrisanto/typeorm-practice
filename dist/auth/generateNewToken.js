@@ -7,7 +7,6 @@ exports.generateNewToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const generateNewToken = (req, res) => {
     const refreshToken = req.headers.refresh;
-    console.log(refreshToken);
     let token = '';
     if (refreshToken && refreshToken.toLowerCase().startsWith('bearer')) {
         token = refreshToken.substring(7);
@@ -20,10 +19,10 @@ const generateNewToken = (req, res) => {
         rol: decodedToken.rol
     };
     const newToken = jsonwebtoken_1.default.sign(userData, 'stalin', {
-        expiresIn: '5m'
+        expiresIn: '10m'
     });
     const authToken = { newToken };
-    return res.json({ authToken });
-    // return "userData";
+    return res.json({ newToken: authToken.newToken });
+    //return authToken;
 };
 exports.generateNewToken = generateNewToken;

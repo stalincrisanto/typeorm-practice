@@ -34,10 +34,10 @@ const login = async (emailUser, passwordUser) => {
         rol: userData === null || userData === void 0 ? void 0 : userData.rol
     };
     const token = jwt.sign(userForToken, 'stalin', {
-        expiresIn: '5m'
+        expiresIn: '1m'
     });
     const refreshToken = jwt.sign(userForRefreshToken, 'crisanto', {
-        expiresIn: '10m'
+        expiresIn: '5m'
     });
     const authToken = { token, refreshToken };
     return authToken;
